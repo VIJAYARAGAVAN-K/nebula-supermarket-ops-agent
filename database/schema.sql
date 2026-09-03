@@ -11,10 +11,17 @@ CREATE TABLE IF NOT EXISTS products (
     reorder_level INTEGER NOT NULL DEFAULT 5
 );
 
-CREATE TABLE IF NOT EXISTS customers (
+CREATE TABLE IF NOT EXISTS bill_items (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    phone TEXT UNIQUE
+    bill_id INTEGER NOT NULL,
+    product_id INTEGER NOT NULL,
+    quantity INTEGER NOT NULL,
+    unit_price REAL NOT NULL,
+    gst_rate REAL NOT NULL,
+    gst_amount REAL NOT NULL,
+    line_total REAL NOT NULL,
+    FOREIGN KEY (bill_id) REFERENCES bills(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
 CREATE TABLE IF NOT EXISTS bills (

@@ -3,7 +3,8 @@ import json
 from dotenv import load_dotenv
 from google import genai
 
-from src.tools.products import check_stock
+from src.tools.products import check_stock, receive_stock, low_stock
+from src.tools.billing import create_bill
 
 load_dotenv()
 
@@ -24,30 +25,113 @@ tools = [
             },
             "required": ["product_name"]
         }
+    },
+    {
+        "type": "function",
+        "name": "receive_stock",
+        "description": "Add received quantity to an existing supermarket product's stock.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "quantity": {
+                    "type": "integer"
+                }
+            },
+            "required": ["name", "quantity"]
+        }
+    },
+    {
+        "type": "function",
+        "name": "low_stock",
+        "description": "Find products at or below their reorder level.",
+        "parameters": {
+            "type": "object",
+            "properties": {}
+        }
+    },
+    {
+        "type": "function",
+        "name": "create_bill",
+        "description": "Create a bill, calculate GST, verify stock, and reduce inventory.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "sku": {
+                                "type": "string"
+                            },
+                            "quantity": {
+                                "type": "integer"
+                            }
+                        },
+                        "required": ["sku", "quantity"]
+                    }
+                },
+                "payment_mode": {
+                    "type": "string"
+                }
+            },
+            "required": ["items"]
+        }
     }
 ]
 
-interaction = client.interactions.create(
-    model="gemini-3.6-flash",
-    input="How many Maggi products are currently in stock?",
-    tools=tools
-)
+function_map = {
+    "check_stock": lambda args: check_stock(args["product_name"]),
+    "receive_stock": lambda args: receive_stock(
+        args["name"], args["quantity"]
+    ),
+    "low_stock": lambda args: low_stock(),
+    "create_bill": lambda args: create_bill(
+        args["items"],
+        args.get("payment_mode", "cash")
+    )
+}
 
-for step in interaction.steps:
-    if step.type == "function_call":
-        print("Gemini requested:", step.name)
 
-        result = check_stock(step.arguments["product_name"])
+def run_agent(user_message):
 
-        final_interaction = client.interactions.create(
+    interaction = client.interactions.create(
+        model="gemini-3.6-flash",
+        input=user_message,
+        tools=tools
+    )
+
+    while True:
+
+        function_call = None
+
+        for step in interaction.steps:
+            if step.type == "function_call":
+                function_call = step
+                break
+
+        if not function_call:
+            return interaction.output_text
+
+        print("Gemini requested:", function_call.name)
+        print("Arguments:", function_call.arguments)
+
+        result = function_map[function_call.name](function_call.arguments)
+
+        print("Tool result:", result)
+
+        interaction = client.interactions.create(
             model="gemini-3.6-flash",
             previous_interaction_id=interaction.id,
             tools=tools,
             input=[
                 {
                     "type": "function_result",
-                    "name": step.name,
-                    "call_id": step.id,
+                    "name": function_call.name,
+                    "call_id": function_call.id,
                     "result": [
                         {
                             "type": "text",
@@ -58,4 +142,13 @@ for step in interaction.steps:
             ]
         )
 
-        print("Agent:", final_interaction.output_text)
+
+user_message = input("You: ")
+
+try:
+    print("Agent:", run_agent(user_message))
+except Exception as e:
+    if "quota" in str(e).lower() or "429" in str(e):
+        print("Agent: Gemini API quota exceeded. Please try again later.")
+    else:
+        print("Agent error:", e)
