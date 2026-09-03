@@ -1,0 +1,31 @@
+CREATE TABLE IF NOT EXISTS products (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    sku TEXT UNIQUE NOT NULL,
+    price REAL NOT NULL,
+    gst_rate REAL NOT NULL,
+    quantity INTEGER NOT NULL DEFAULT 0,
+    reorder_level INTEGER NOT NULL DEFAULT 5
+);
+
+CREATE TABLE IF NOT EXISTS customers (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    phone TEXT UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS bills (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    customer_id INTEGER,
+    total REAL NOT NULL,
+    payment_mode TEXT NOT NULL,
+    created_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS khata (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    customer_id INTEGER NOT NULL,
+    amount REAL NOT NULL,
+    type TEXT NOT NULL,
+    created_at TEXT NOT NULL
+);
