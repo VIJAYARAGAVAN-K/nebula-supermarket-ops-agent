@@ -1,17 +1,19 @@
 from src.database import get_connection
 
-def add_product(name, sku, price, gst_rate, quantity, reorder_level=5):
+def add_product(name, sku, cost_price, price, gst_rate, hsn_code, unit, quantity, reorder_level=5):
     conn = get_connection()
+
     conn.execute(
         """INSERT INTO products
-        (name, sku, price, gst_rate, quantity, reorder_level)
-        VALUES (?, ?, ?, ?, ?, ?)""",
-        (name, sku, price, gst_rate, quantity, reorder_level)
+        (name, sku, cost_price, price, gst_rate, hsn_code, unit, quantity, reorder_level)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+        (name, sku, cost_price, price, gst_rate, hsn_code, unit, quantity, reorder_level)
     )
+
     conn.commit()
     conn.close()
 
-    return f"{name} added successfully."    
+    return f"{name} added successfully." 
 
 def check_stock(name):
     conn = get_connection()
@@ -30,6 +32,9 @@ def check_stock(name):
 
 
 def receive_stock(name, quantity):
+    if quantity <= 0:
+        return "Quantity must be greater than zero."
+
     conn = get_connection()
 
     result = conn.execute(

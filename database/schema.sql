@@ -2,8 +2,11 @@ CREATE TABLE IF NOT EXISTS products (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     sku TEXT UNIQUE NOT NULL,
+    cost_price REAL NOT NULL,
     price REAL NOT NULL,
     gst_rate REAL NOT NULL,
+    hsn_code TEXT NOT NULL,
+    unit TEXT NOT NULL,
     quantity INTEGER NOT NULL DEFAULT 0,
     reorder_level INTEGER NOT NULL DEFAULT 5
 );
