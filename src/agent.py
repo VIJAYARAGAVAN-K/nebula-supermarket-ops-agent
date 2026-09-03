@@ -5,6 +5,7 @@ from google import genai
 from src.tools.customers import add_customer, add_credit, add_payment, get_balance
 from src.tools.products import check_stock, receive_stock, low_stock
 from src.tools.billing import create_bill
+from src.tools.bill_history import get_bill_history
 
 load_dotenv()
 
@@ -104,6 +105,15 @@ tools = [
         }
     },
     {
+    "type": "function",
+    "name": "get_bill_history",
+    "description": "Show previous supermarket bills.",
+    "parameters": {
+        "type": "object",
+        "properties": {}
+        }
+    },
+    {
         "type": "function",
         "name": "create_bill",
         "description": "Create a bill, calculate GST, verify stock, and reduce inventory.",
@@ -158,6 +168,7 @@ function_map = {
     args["customer_name"],
     args["amount"]
 ),
+"get_bill_history": lambda args: get_bill_history(),
 
 "get_balance": lambda args: get_balance(
     args["customer_name"]
