@@ -2,7 +2,7 @@ import os
 import json
 from dotenv import load_dotenv
 from google import genai
-
+from src.tools.customers import add_customer, add_credit, add_payment, get_balance
 from src.tools.products import check_stock, receive_stock, low_stock
 from src.tools.billing import create_bill
 
@@ -26,6 +26,57 @@ tools = [
             "required": ["product_name"]
         }
     },
+    {
+    "type": "function",
+    "name": "add_customer",
+    "description": "Add a supermarket customer.",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "name": {"type": "string"},
+            "phone": {"type": "string"}
+        },
+        "required": ["name"]
+    }
+},
+{
+    "type": "function",
+    "name": "add_credit",
+    "description": "Add an amount to a customer's Khata credit balance.",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "customer_name": {"type": "string"},
+            "amount": {"type": "number"}
+        },
+        "required": ["customer_name", "amount"]
+    }
+},
+{
+    "type": "function",
+    "name": "add_payment",
+    "description": "Record a payment made toward a customer's Khata balance.",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "customer_name": {"type": "string"},
+            "amount": {"type": "number"}
+        },
+        "required": ["customer_name", "amount"]
+    }
+},
+{
+    "type": "function",
+    "name": "get_balance",
+    "description": "Check how much a customer currently owes on Khata.",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "customer_name": {"type": "string"}
+        },
+        "required": ["customer_name"]
+    }
+},
     {
         "type": "function",
         "name": "receive_stock",
@@ -92,7 +143,25 @@ function_map = {
     "create_bill": lambda args: create_bill(
         args["items"],
         args.get("payment_mode", "cash")
-    )
+    ),
+    "add_customer": lambda args: add_customer(
+        args["name"],
+        args.get("phone")
+    ),
+
+    "add_credit": lambda args: add_credit(
+        args["customer_name"],
+        args["amount"]
+    ),
+
+"add_payment": lambda args: add_payment(
+    args["customer_name"],
+    args["amount"]
+),
+
+"get_balance": lambda args: get_balance(
+    args["customer_name"]
+),
 }
 
 
