@@ -11,7 +11,7 @@ The system allows supermarket staff to manage products, inventory, customers, bi
 
 ### Dashboard
 
-<img width="1917" height="967" alt="image" src="https://github.com/user-attachments/assets/9158c32d-d437-4b6f-ba72-c12699bf712a" />
+<img width="1917" height="958" alt="image" src="https://github.com/user-attachments/assets/6418b8c4-f10b-4844-bee7-beec662c50b7" />
 
 
 ### AI Assistant
