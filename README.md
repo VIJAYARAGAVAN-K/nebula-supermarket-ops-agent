@@ -165,64 +165,59 @@ Total products
 Total bills
 Total customers
 Low-stock products
-🏗️ Project Architecture
+🏗️ Project Architecture — Nebula Supermarket Ops Agent
 Nebula Supermarket Ops Agent
-│
-├── ui/
-│   └── app.py
-│
-├── src/
-│   ├── __init__.py
-│   ├── agent.py
-│   ├── database.py
-│   ├── main.py
-│   ├── gemini_test.py
-│   │
-│   └── tools/
-│       ├── __init__.py
-│       ├── bill_history.py
-│       ├── billing.py
-│       ├── customers.py
-│       ├── products.py
-│       └── registry.py
-│
-├── database/
-│   └── schema.sql
-│
-├── requirements.txt
-├── .gitignore
-└── README.md ''' 
+UI
+ui/app.py — Streamlit-based user interface
+Source Code
+src/__init__.py
+src/agent.py — AI agent and Gemini integration
+src/database.py — SQLite database connection
+src/main.py — Application entry point
+src/gemini_test.py — Gemini API testing
+Tools
+src/tools/__init__.py
+src/tools/bill_history.py — Bill history operations
+src/tools/billing.py — Billing and invoice operations
+src/tools/customers.py — Customer and credit operations
+src/tools/products.py — Product and inventory operations
+src/tools/registry.py — Tool registry
+Database
+database/schema.sql — SQLite database schema
+Configuration & Documentation
+requirements.txt — Python dependencies
+.gitignore — Git ignored files
+README.md — Project documentation
 🔄 System Flow
 
-''' The general flow of the application is:
+The application follows this flow:
 
-User
-  │
-  ▼
-Streamlit UI
-  │
-  ▼
-AI Agent
-  │
-  ▼
-Gemini AI
-  │
-  ▼
-Function / Tool Selection
-  │
-  ├── check_stock
-  ├── receive_stock
-  ├── low_stock
-  ├── create_bill
-  ├── add_customer
-  ├── add_credit
-  ├── add_payment
-  ├── get_balance
-  └── get_bill_history
-          │
-          ▼
-     SQLite Database
-     '''
+👤 User
+Enters a request using natural language.
+🖥️ Streamlit UI
+Receives the user's request.
+Provides the interface for supermarket operations.
+🤖 AI Agent
+Processes the user's request.
+Sends the request to Gemini AI.
+🧠 Gemini AI
+Understands the user's intent.
+Selects the appropriate function/tool automatically.
+🛠️ Function / Tool Selection
+Gemini can select from the following tools:
+check_stock
+receive_stock
+low_stock
+create_bill
+add_customer
+add_credit
+add_payment
+get_balance
+get_bill_history
+🗄️ SQLite Database
+Executes the selected operation.
+Stores or retrieves supermarket data.
+Updates inventory, bills, customers, payments, and credit information.
 🧠 AI Agent Architecture
 
 The AI agent is implemented in:
