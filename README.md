@@ -6,6 +6,19 @@ The system allows supermarket staff to manage products, inventory, customers, bi
 
 ---
 
+
+## 🖥️ Application Preview
+
+### Dashboard
+
+<img width="1917" height="967" alt="image" src="https://github.com/user-attachments/assets/9158c32d-d437-4b6f-ba72-c12699bf712a" />
+
+
+### AI Assistant
+
+<img width="1917" height="971" alt="image" src="https://github.com/user-attachments/assets/35b519b2-5299-45f6-964a-74976a9a90f5" />
+
+
 ## 🚀 Features
 
 ### 🤖 AI Supermarket Assistant
@@ -54,6 +67,9 @@ Available: 28
 
 The system reports insufficient stock instead of creating an invalid bill.
 
+<img width="1917" height="972" alt="image" src="https://github.com/user-attachments/assets/df538b28-b0dc-4398-9049-270530f0f03f" />
+
+
 📦 Inventory Management
 
 The inventory module provides:
@@ -75,6 +91,9 @@ Maggi 70g | SKU: MAGGI70 | Price: ₹15.0 | Stock: 28
 Stock can also be received through the AI assistant:
 
 Receive 50 Maggi 70g packets.
+
+<img width="1917" height="941" alt="image" src="https://github.com/user-attachments/assets/dfb1b456-431d-448f-8ab3-f1f23aee182f" />
+
 👥 Customer Management
 
 The customer system supports:
@@ -89,6 +108,9 @@ Customer balance checking
 Example:
 
 Add customer Arun with phone number 9876543210
+<img width="1916" height="967" alt="image" src="https://github.com/user-attachments/assets/1f50dbdb-16d7-4c62-9e29-9451f5dda2b0" />
+
+
 💳 Payments & Credit / Khata
 
 The system supports customer credit management.
@@ -104,6 +126,9 @@ How much does Arun owe?
 
 This allows the supermarket to maintain customer Khata balances.
 
+<img width="1917" height="971" alt="image" src="https://github.com/user-attachments/assets/b80dd1cb-da7e-4193-9c79-43dd36351f60" />
+
+
 📜 Bill History
 
 The system maintains previous billing records.
@@ -115,6 +140,10 @@ Example:
 Show previous bills.
 
 The bill history module provides access to previously generated supermarket bills.
+<img width="1916" height="941" alt="image" src="https://github.com/user-attachments/assets/c59f508f-a04c-4490-b78e-d84f9b7f26f5" />
+
+<img width="1917" height="957" alt="image" src="https://github.com/user-attachments/assets/9715b8dd-d30d-44cd-adf0-3dc901b9d3db" />
+
 
 📊 Streamlit Dashboard
 
