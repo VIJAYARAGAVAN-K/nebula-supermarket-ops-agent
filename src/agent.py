@@ -223,12 +223,13 @@ def run_agent(user_message):
         )
 
 
-user_message = input("You: ")
+if __name__ == "__main__":
+    user_message = input("You: ")
 
-try:
-    print("Agent:", run_agent(user_message))
-except Exception as e:
-    if "quota" in str(e).lower() or "429" in str(e):
-        print("Agent: Gemini API quota exceeded. Please try again later.")
-    else:
-        print("Agent error:", e)
+    try:
+        print("Agent:", run_agent(user_message))
+    except Exception as e:
+        if "quota" in str(e).lower() or "429" in str(e):
+            print("Agent: Gemini API quota exceeded. Please try again later.")
+        else:
+            print("Agent error:", e)
