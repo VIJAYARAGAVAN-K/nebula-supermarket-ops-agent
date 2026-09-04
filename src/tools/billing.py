@@ -2,16 +2,31 @@ from src.database import get_connection
 from datetime import datetime
 
 
-def create_bill(items, payment_mode="cash"):
+def create_bill(items, payment_mode="cash", customer_name=None):
     conn = get_connection()
 
     try:
         total = 0
         bill_items = []
+        customer_id = None
 
+        # Find customer if provided
+        if customer_name:
+            customer = conn.execute(
+                "SELECT id FROM customers WHERE name LIKE ?",
+                (f"%{customer_name}%",)
+            ).fetchone()
+
+            if not customer:
+                return "Customer not found."
+
+            customer_id = customer[0]
+
+        # Validate products and calculate bill
         for item in items:
             product = conn.execute(
-                "SELECT id, name, price, gst_rate, quantity FROM products WHERE sku = ?",
+                """SELECT id, name, price, gst_rate, quantity
+                   FROM products WHERE sku = ?""",
                 (item["sku"],)
             ).fetchone()
 
@@ -44,15 +59,26 @@ def create_bill(items, payment_mode="cash"):
                 )
             )
 
+        # Credit sales require a customer
+        if payment_mode.lower() == "credit" and not customer_id:
+            return "Customer name is required for credit sales."
+
+        # Create bill
         cursor = conn.execute(
             """INSERT INTO bills
-            (total, payment_mode, created_at)
-            VALUES (?, ?, ?)""",
-            (total, payment_mode, datetime.now().isoformat())
+            (customer_id, total, payment_mode, created_at)
+            VALUES (?, ?, ?, ?)""",
+            (
+                customer_id,
+                total,
+                payment_mode,
+                datetime.now().isoformat()
+            )
         )
 
         bill_id = cursor.lastrowid
 
+        # Add bill items and reduce stock
         for product_id, quantity, price, gst_rate, gst_amount, line_total in bill_items:
 
             conn.execute(
@@ -76,6 +102,20 @@ def create_bill(items, payment_mode="cash"):
                 SET quantity = quantity - ?
                 WHERE id = ?""",
                 (quantity, product_id)
+            )
+
+        # Add credit to Khata
+        if payment_mode.lower() == "credit":
+            conn.execute(
+                """INSERT INTO khata
+                (customer_id, amount, type, created_at)
+                VALUES (?, ?, ?, ?)""",
+                (
+                    customer_id,
+                    total,
+                    "credit",
+                    datetime.now().isoformat()
+                )
             )
 
         conn.commit()
