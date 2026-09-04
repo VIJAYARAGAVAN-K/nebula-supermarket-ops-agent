@@ -159,7 +159,7 @@ The dashboard provides navigation for:
 📜 Bill History
 🤖 AI Assistant
 
-The dashboard also displays basic supermarket statistics such as:
+''' The dashboard also displays basic supermarket statistics such as:
 
 Total products
 Total bills
@@ -191,10 +191,10 @@ Nebula Supermarket Ops Agent
 │
 ├── requirements.txt
 ├── .gitignore
-└── README.md
+└── README.md ''' 
 🔄 System Flow
 
-The general flow of the application is:
+''' The general flow of the application is:
 
 User
   │
@@ -222,6 +222,7 @@ Function / Tool Selection
           │
           ▼
      SQLite Database
+     '''
 🧠 AI Agent Architecture
 
 The AI agent is implemented in:
