@@ -27,7 +27,7 @@ Users can interact with the supermarket system using natural language.
 
 Example requests:
 
-```text
+text
 Check the stock of Maggi 70g
 Create a bill for 2 Maggi 70g packets and pay by cash.
 Add customer Ravi with phone number 9876543210
