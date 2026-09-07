@@ -4,7 +4,7 @@
 >
 > Built with **Python, Gemini, SQLite and Streamlit**.
 
-## Overview
+## Overview of the project
 
 Nebula Supermarket Ops Agent is an AI-driven supermarket operations system that lets a store operator manage inventory, billing, customers and credit using natural-language instructions.
 
