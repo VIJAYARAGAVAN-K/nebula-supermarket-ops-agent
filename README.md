@@ -92,7 +92,7 @@ Gemini continues reasoning if required
 Final Response
 ```
 
-The agent supports an optional `trace_callback`, while the original `run_agent(user_message)` usage remains valid.
+The agent supports an optional trace_callback, while the original run_agent(user_message) usage remains valid.
 
 
 ## Billing
@@ -143,7 +143,7 @@ The current agent exposes nine business tools:
 | get_balance | Check a customer's outstanding balance |
 | get_bill_history | Retrieve previous bills |
 
-> **Note:** get_bill_history is included in the current implementation, making the active tool surface nine named operations in total.
+
 
 ## Example AI Commands
 
