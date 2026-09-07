@@ -471,7 +471,7 @@ The system should not silently create a bill for inventory that is unavailable.
 - **Gemini Function Calling / Interactions API**
 - **Streamlit**
 - **SQLite**
-- **Plotly** (where available for analytics visualization)
+- **Plotly** (used for analytics visualization)
 - **python-dotenv**
 
 ## Project Status
