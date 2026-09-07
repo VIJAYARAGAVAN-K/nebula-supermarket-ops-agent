@@ -8,7 +8,7 @@
 
 Nebula Supermarket Ops Agent is an AI-driven supermarket operations system that lets a store operator manage inventory, billing, customers and credit using natural-language instructions.
 
-Instead of relying on a large rule-based `if/elif` intent router, the application uses **Gemini function calling** to understand a request, select the appropriate business tool, execute the operation against SQLite, receive the tool result, and continue the reasoning loop when another tool is required.
+Instead of relying on a large rule-based if/elif intent router, the application uses **Gemini function calling** to understand a request, select the appropriate business tool, execute the operation against SQLite, receive the tool result, and continue the reasoning loop when another tool is required.
 
 The project currently includes a professional Streamlit operations dashboard alongside the conversational AI assistant.
 
@@ -133,17 +133,17 @@ The current agent exposes nine business tools:
 
 | Tool | Purpose |
 |---|---|
-| `check_stock` | Check current stock for a product |
-| `receive_stock` | Add received inventory |
-| `low_stock` | Find products at or below reorder level |
-| `create_bill` | Validate stock, calculate GST and create a bill |
-| `add_customer` | Create a customer record |
-| `add_credit` | Add an amount to a customer's Khata balance |
-| `add_payment` | Record a customer payment |
-| `get_balance` | Check a customer's outstanding balance |
-| `get_bill_history` | Retrieve previous bills |
+| check_stock | Check current stock for a product |
+| receive_stock | Add received inventory |
+| low_stock | Find products at or below reorder level |
+| create_bill | Validate stock, calculate GST and create a bill |
+| add_customer | Create a customer record |
+| add_credit | Add an amount to a customer's Khata balance |
+| add_payment | Record a customer payment |
+| get_balance | Check a customer's outstanding balance |
+| get_bill_history | Retrieve previous bills |
 
-> **Note:** `get_bill_history` is included in the current implementation, making the active tool surface nine named operations in total.
+> **Note:** get_bill_history is included in the current implementation, making the active tool surface nine named operations in total.
 
 ## Example AI Commands
 
@@ -211,15 +211,15 @@ The agent can chain operations when a request requires multiple steps. For examp
 
 ### Main Components
 
-- `ui/app.py` — Streamlit application and operations dashboard
-- `src/agent.py` — Gemini model integration, function definitions and tool-calling loop
-- `src/tools/products.py` — inventory operations
-- `src/tools/billing.py` — billing and stock validation
-- `src/tools/customers.py` — customer and Khata operations
-- `src/tools/bill_history.py` — previous bill retrieval
-- `src/tools/registry.py` — tool registration utilities
-- `src/database.py` — SQLite connection
-- `database/schema.sql` — database schema
+- ui/app.py — Streamlit application and operations dashboard
+- src/agent.py — Gemini model integration, function definitions and tool-calling loop
+- src/tools/products.py — inventory operations
+- src/tools/billing.py — billing and stock validation
+- src/tools/customers.py — customer and Khata operations
+- src/tools/bill_history.py — previous bill retrieval
+- src/tools/registry.py — tool registration utilities
+- src/database.py — SQLite connection
+- database/schema.sql — database schema
 
 ## Agent Control Loop
 
