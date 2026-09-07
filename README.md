@@ -1,6 +1,6 @@
 # 🛒 Nebula Supermarket Ops Agent
 
-> **AI-powered operations assistant for an Indian supermarket / kirana store**
+> **AI-powered operations assistant for an Indian supermarket**
 >
 > Built with **Python, Gemini, SQLite and Streamlit**.
 
@@ -325,13 +325,13 @@ pip install -r requirements.txt
 
 ### 4. Configure Gemini
 
-Create a `.env` file in the project root:
+Create a .env file in the project root:
 
 ```env
 GEMINI_API_KEY=your_gemini_api_key
 ```
 
-Do not commit `.env` or API keys to GitHub.
+Do not commit .env or API keys to GitHub.
 
 ### 5. Initialize the database
 
@@ -341,7 +341,7 @@ Ensure the SQLite database is initialized using the project's schema/data setup.
 database/supermarket.db
 ```
 
-The `.gitignore` excludes `*.db` so local database files are not committed.
+The .gitignore excludes *.db so local database files are not committed.
 
 ### 6. Start the application
 
