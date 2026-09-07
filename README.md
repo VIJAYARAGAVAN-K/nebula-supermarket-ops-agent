@@ -118,7 +118,7 @@ The agent supports an optional `trace_callback`, while the original `run_agent(u
 
 ## AI Assistant
 
-<img width="1916" height="953" alt="image" src="https://github.com/user-attachments/assets/c979c247-634e-47d6-80c6-261a2812aeca" />
+<img width="1906" height="920" alt="image" src="https://github.com/user-attachments/assets/6f23b344-de3f-48fd-aaca-7fa6cee73d2b" />
 
 <img width="1911" height="946" alt="image" src="https://github.com/user-attachments/assets/4ee40450-7916-4a8b-8449-da3f8cd6fd98" />
 
