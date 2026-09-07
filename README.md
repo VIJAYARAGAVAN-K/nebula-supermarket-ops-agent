@@ -1,528 +1,480 @@
 # 🛒 Nebula Supermarket Ops Agent
 
-An AI-powered supermarket operations management system built with **Python, Gemini AI, SQLite, and Streamlit**.
+> **AI-powered operations assistant for an Indian supermarket / kirana store**
+>
+> Built with **Python, Gemini, SQLite and Streamlit**.
 
-The system allows supermarket staff to manage products, inventory, customers, billing, payments, credit (Khata), bill history, and supermarket operations using both a graphical dashboard and a natural-language AI assistant.
+## Overview
 
----
+Nebula Supermarket Ops Agent is an AI-driven supermarket operations system that lets a store operator manage inventory, billing, customers and credit using natural-language instructions.
 
+Instead of relying on a large rule-based `if/elif` intent router, the application uses **Gemini function calling** to understand a request, select the appropriate business tool, execute the operation against SQLite, receive the tool result, and continue the reasoning loop when another tool is required.
 
-## 🖥️ Application Preview
+The project currently includes a professional Streamlit operations dashboard alongside the conversational AI assistant.
 
-### Dashboard
+## Current Capabilities
 
-<img width="1917" height="958" alt="image" src="https://github.com/user-attachments/assets/6418b8c4-f10b-4844-bee7-beec662c50b7" />
+### 1. Command Center KPI Dashboard
 
+The dashboard provides a live operational snapshot:
 
-### AI Assistant
+- Total products
+- Today's bills
+- Today's revenue
+- Total customers
+- Low-stock items
+- Outstanding customer credit
 
-<img width="1917" height="971" alt="image" src="https://github.com/user-attachments/assets/35b519b2-5299-45f6-964a-74976a9a90f5" />
+<img width="1917" height="790" alt="image" src="https://github.com/user-attachments/assets/3e7ec871-4569-4b3b-be8e-3c65f73a060b" />
 
 
-## 🚀 Features
+### 2. Sales & Revenue Analytics
 
-### 🤖 AI Supermarket Assistant
+- Today's revenue
+- Recent revenue trend
+- Bills per day
+- Revenue visualization
+- Operational sales summary
 
-Users can interact with the supermarket system using natural language.
+  <img width="1917" height="892" alt="image" src="https://github.com/user-attachments/assets/dc912728-93e1-416e-8566-d3aab769372c" />
 
-Example requests:
 
-text
-Check the stock of Maggi 70g
-Create a bill for 2 Maggi 70g packets and pay by cash.
-Add customer Ravi with phone number 9876543210
-How much does Ravi owe?
-Add ₹500 credit to Ravi's account.
-Record a payment of ₹200 from Ravi.
+### 3. Top-Selling Products
 
-The AI agent identifies the required operation and calls the appropriate backend tool.
+- Top 5 products by quantity sold
+- Quantity sold
+- Sales revenue
+- Product-level sales performance
 
-🧾 Billing
+ <img width="1915" height="970" alt="image" src="https://github.com/user-attachments/assets/6baa7f99-3fbe-4132-ba6d-c14f997255c2" />
 
-The billing system supports:
 
-Product selection using SKU
-Quantity validation
-Stock verification
-Automatic inventory deduction
-Subtotal calculation
-GST calculation
-Total bill calculation
-Cash payment
-Credit / Khata payment
-Insufficient-stock handling
+### 4. Low-Stock Alert Center
 
-Example:
+Products are classified using their reorder level:
 
-Create a bill for 2 Maggi 70g packets and pay by cash.
+- 🔴 **CRITICAL** — stock is zero
+- 🟠 **LOW** — stock is at or below reorder level
+- 🟢 **HEALTHY** — stock is above reorder level
 
-The system checks inventory before creating the bill.
+### 5. Recent Activity Timeline
 
-If the requested quantity is greater than available stock, the bill is rejected safely.
+The command center surfaces recent billing activity from the database so the operator can quickly understand what has happened in the store.
 
-Example:
+### 6. AI Operations Panel
 
-Requested: 100
-Available: 28
+The dashboard exposes operational AI status, including:
 
-The system reports insufficient stock instead of creating an invalid bill.
+- Gemini agent availability
+- Registered tool count
+- Database availability
+- Last AI request
+- Last operation
+- Last operation status
 
-<img width="1917" height="972" alt="image" src="https://github.com/user-attachments/assets/df538b28-b0dc-4398-9049-270530f0f03f" />
+### 7. AI Execution Timeline
 
+The AI Assistant now exposes the actual function-calling flow instead of displaying a generic loading animation:
 
-📦 Inventory Management
-
-The inventory module provides:
-
-Product stock checking
-Stock receiving
-Low-stock detection
-SKU-based product identification
-Automatic stock reduction after billing
-
-Example:
-
-Check the stock of Maggi 70g
-
-Possible response:
-
-Maggi 70g | SKU: MAGGI70 | Price: ₹15.0 | Stock: 28
-
-Stock can also be received through the AI assistant:
-
-Receive 50 Maggi 70g packets.
-
-<img width="1917" height="941" alt="image" src="https://github.com/user-attachments/assets/dfb1b456-431d-448f-8ab3-f1f23aee182f" />
-
-👥 Customer Management
-
-The customer system supports:
-
-Adding customers
-Customer name
-Phone number
-Credit tracking
-Payment tracking
-Customer balance checking
-
-Example:
-
-Add customer Arun with phone number 9876543210
-<img width="1916" height="967" alt="image" src="https://github.com/user-attachments/assets/1f50dbdb-16d7-4c62-9e29-9451f5dda2b0" />
-
-
-💳 Payments & Credit / Khata
-
-The system supports customer credit management.
-
-Available operations include:
-
-Add Credit
-Add ₹1000 credit to Arun.
-Record Payment
-Record a payment of ₹500 from Arun.
-Check Balance
-How much does Arun owe?
-
-This allows the supermarket to maintain customer Khata balances.
-
-<img width="1917" height="971" alt="image" src="https://github.com/user-attachments/assets/b80dd1cb-da7e-4193-9c79-43dd36351f60" />
-
-
-📜 Bill History
-
-The system maintains previous billing records.
-
-The AI assistant can retrieve bill history using natural language.
-
-Example:
-
-Show previous bills.
-
-The bill history module provides access to previously generated supermarket bills.
-<img width="1916" height="941" alt="image" src="https://github.com/user-attachments/assets/c59f508f-a04c-4490-b78e-d84f9b7f26f5" />
-
-<img width="1917" height="957" alt="image" src="https://github.com/user-attachments/assets/9715b8dd-d30d-44cd-adf0-3dc901b9d3db" />
-
-
-📊 Streamlit Dashboard
-
-The project includes a Streamlit-based graphical user interface.
-
-The dashboard provides navigation for:
-
-🏠 Dashboard
-🧾 Billing
-📦 Inventory
-👥 Customers
-💳 Payments & Credit
-📜 Bill History
-🤖 AI Assistant
-
-''' The dashboard also displays basic supermarket statistics such as:
-
-Total products
-Total bills
-Total customers
-Low-stock products
-🏗️ Project Architecture — Nebula Supermarket Ops Agent
-Nebula Supermarket Ops Agent
-UI
-ui/app.py — Streamlit-based user interface
-Source Code
-src/__init__.py
-src/agent.py — AI agent and Gemini integration
-src/database.py — SQLite database connection
-src/main.py — Application entry point
-src/gemini_test.py — Gemini API testing
-Tools
-src/tools/__init__.py
-src/tools/bill_history.py — Bill history operations
-src/tools/billing.py — Billing and invoice operations
-src/tools/customers.py — Customer and credit operations
-src/tools/products.py — Product and inventory operations
-src/tools/registry.py — Tool registry
-Database
-database/schema.sql — SQLite database schema
-Configuration & Documentation
-requirements.txt — Python dependencies
-.gitignore — Git ignored files
-README.md — Project documentation
-🔄 System Flow
-
-The application follows this flow:
-
-👤 User
-Enters a request using natural language.
-🖥️ Streamlit UI
-Receives the user's request.
-Provides the interface for supermarket operations.
-🤖 AI Agent
-Processes the user's request.
-Sends the request to Gemini AI.
-🧠 Gemini AI
-Understands the user's intent.
-Selects the appropriate function/tool automatically.
-🛠️ Function / Tool Selection
-Gemini can select from the following tools:
-check_stock
-receive_stock
-low_stock
-create_bill
-add_customer
-add_credit
-add_payment
-get_balance
-get_bill_history
-🗄️ SQLite Database
-Executes the selected operation.
-Stores or retrieves supermarket data.
-Updates inventory, bills, customers, payments, and credit information.
-🧠 AI Agent Architecture
-
-The AI agent is implemented in:
-
-src/agent.py
-
-The agent uses Gemini to determine which supermarket operation should be executed.
-
-The available functions are registered as tools.
-
-Available Tools
-Tool	Purpose
-check_stock	Check product inventory
-receive_stock	Add received inventory
-low_stock	Find low-stock products
-create_bill	Create a supermarket bill
-add_customer	Add a new customer
-add_credit	Add customer credit
-add_payment	Record customer payment
-get_balance	Check customer balance
-get_bill_history	Retrieve previous bills
-
-The agent follows a tool-calling workflow:
-
+```text
 User Request
-     ↓
+      ↓
 Gemini
-     ↓
-Select Tool
-     ↓
-Execute Python Function
-     ↓
-Database Operation
-     ↓
-Return Tool Result
-     ↓
-Gemini
-     ↓
+      ↓
+Tool Selection
+      ↓
+Tool Execution
+      ↓
+Database / Business Result
+      ↓
+Gemini continues reasoning if required
+      ↓
 Final Response
-🗄️ Database
+```
 
-The project uses SQLite for local data storage.
+The agent supports an optional `trace_callback`, while the original `run_agent(user_message)` usage remains valid.
 
-Database file:
 
-database/supermarket.db
+## Billing
 
-Database schema:
+<img width="1910" height="962" alt="image" src="https://github.com/user-attachments/assets/7bc3db7f-f5d2-4e31-a2a1-dbf638444000" />
 
-database/schema.sql
+## Inventory
 
-The database stores supermarket operational information including products, customers, bills, and related records.
+<img width="1910" height="921" alt="image" src="https://github.com/user-attachments/assets/9a863ba6-2d2e-48d1-9ca3-9b8f62272920" />
 
-🔐 Environment Variables
 
-The Gemini API key is stored using an environment variable.
+## Customers
 
-Create a .env file in the project root:
+<img width="1916" height="971" alt="image" src="https://github.com/user-attachments/assets/bbebe60e-f360-479d-9035-d4911a14df94" />
 
-GEMINI_API_KEY=your_gemini_api_key
+## Payments and credits
 
-Do not commit the .env file to GitHub.
+<img width="1917" height="922" alt="image" src="https://github.com/user-attachments/assets/8432e0ed-9189-4248-93fa-69a2025b297c" />
 
-The .gitignore file already excludes environment files.
+## Bill / Transaction History
 
-🛠️ Technologies Used
-Programming Language
-Python
-AI
-Google Gemini API
-User Interface
-Streamlit
-Database
-SQLite
-Environment Management
-python-dotenv
-Version Control
-Git
-GitHub
-📋 Requirements
+<img width="1901" height="968" alt="image" src="https://github.com/user-attachments/assets/b7848f0a-e095-4c8c-9e78-c2d14b7189c4" />
 
-Install the required Python packages using:
+## AI Assistant
 
-pip install -r requirements.txt
+<img width="1916" height="953" alt="image" src="https://github.com/user-attachments/assets/c979c247-634e-47d6-80c6-261a2812aeca" />
 
-The project uses Streamlit for the web interface and the Google GenAI SDK for Gemini integration.
+<img width="1911" height="946" alt="image" src="https://github.com/user-attachments/assets/4ee40450-7916-4a8b-8449-da3f8cd6fd98" />
 
-▶️ Running the Application
-Step 1: Clone the repository
-git clone <your-github-repository-url>
-Step 2: Enter the project directory
+## Result for the above Query
+
+<img width="1917" height="970" alt="image" src="https://github.com/user-attachments/assets/de1ea7a1-5e37-4981-ba16-063b348628f4" />
+<img width="1912" height="890" alt="image" src="https://github.com/user-attachments/assets/51802262-8f44-4869-a407-8383bf0bdefe" />
+
+## AI Tools
+
+The current agent exposes nine business tools:
+
+| Tool | Purpose |
+|---|---|
+| `check_stock` | Check current stock for a product |
+| `receive_stock` | Add received inventory |
+| `low_stock` | Find products at or below reorder level |
+| `create_bill` | Validate stock, calculate GST and create a bill |
+| `add_customer` | Create a customer record |
+| `add_credit` | Add an amount to a customer's Khata balance |
+| `add_payment` | Record a customer payment |
+| `get_balance` | Check a customer's outstanding balance |
+| `get_bill_history` | Retrieve previous bills |
+
+> **Note:** `get_bill_history` is included in the current implementation, making the active tool surface nine named operations in total.
+
+## Example AI Commands
+
+```text
+Check the stock of Maggi 70g
+```
+
+```text
+Create a bill for 2 Maggi 70g packets and pay by cash
+```
+
+```text
+Add customer Ravi with phone number 9876543210
+```
+
+```text
+How much does Ravi owe?
+```
+
+```text
+Add ₹500 credit to Ravi
+```
+
+```text
+Record a payment of ₹200 from Ravi
+```
+
+```text
+Show previous bills
+```
+
+The agent can chain operations when a request requires multiple steps. For example, a billing request can first check stock and then attempt bill creation based on the tool result.
+
+## Architecture
+
+```text
+                    ┌──────────────────────┐
+                    │   Streamlit UI       │
+                    │  Command Center      │
+                    │  Billing / Inventory │
+                    │  Customers / Credit  │
+                    │  AI Assistant        │
+                    └──────────┬───────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │     AI Agent         │
+                    │    src/agent.py      │
+                    │                      │
+                    │ Gemini + Tool Calling│
+                    └──────────┬───────────┘
+                               │
+                ┌──────────────┼──────────────┐
+                ▼              ▼              ▼
+          Inventory         Billing       Customers
+            Tools            Tools          / Khata
+                └──────────────┼──────────────┘
+                               ▼
+                    ┌──────────────────────┐
+                    │      SQLite DB       │
+                    │ database/supermarket │
+                    │       .db            │
+                    └──────────────────────┘
+```
+
+### Main Components
+
+- `ui/app.py` — Streamlit application and operations dashboard
+- `src/agent.py` — Gemini model integration, function definitions and tool-calling loop
+- `src/tools/products.py` — inventory operations
+- `src/tools/billing.py` — billing and stock validation
+- `src/tools/customers.py` — customer and Khata operations
+- `src/tools/bill_history.py` — previous bill retrieval
+- `src/tools/registry.py` — tool registration utilities
+- `src/database.py` — SQLite connection
+- `database/schema.sql` — database schema
+
+## Agent Control Loop
+
+The agent follows a model → tool → result → model control loop:
+
+1. The operator sends a natural-language request.
+2. Gemini interprets the request.
+3. Gemini selects a registered function when an operation is required.
+4. The application executes the corresponding Python business function.
+5. The tool result is returned to Gemini.
+6. Gemini can select another tool when the task requires multiple operations.
+7. Gemini produces the final response.
+
+The execution timeline uses the optional trace callback to expose these steps in the UI.
+
+## Business Rules
+
+Important business logic is enforced in the tool/database layer rather than relying only on the model prompt.
+
+### Stock Validation
+
+A bill cannot be created when requested quantity exceeds available stock. This prevents overselling at the operation layer.
+
+### Inventory Updates
+
+Successful sales reduce product quantity through the billing operation.
+
+### GST
+
+Billing uses the product's configured GST rate and calculates the corresponding tax values used by the application.
+
+### Khata / Customer Credit
+
+Customers can maintain an outstanding balance through:
+
+- Credit additions
+- Payments
+- Balance queries
+
+### Database Grounding
+
+Product availability, prices, customer balances and bill history are retrieved from SQLite through application tools rather than invented by the model.
+
+## Project Structure
+
+```text
+nebula-supermarket-ops-agent/
+│
+├── database/
+│   └── schema.sql
+│
+├── src/
+│   ├── agent.py
+│   ├── database.py
+│   ├── main.py
+│   ├── gemini_test.py
+│   └── tools/
+│       ├── __init__.py
+│       ├── registry.py
+│       ├── products.py
+│       ├── billing.py
+│       ├── customers.py
+│       └── bill_history.py
+│
+├── ui/
+│   └── app.py
+│
+├── requirements.txt
+├── .gitignore
+└── README.md
+```
+
+## Local Setup
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/VIJAYARAGAVAN-K/nebula-supermarket-ops-agent.git
 cd nebula-supermarket-ops-agent
-Step 3: Create a virtual environment
+```
+
+### 2. Create a virtual environment
 
 Windows:
 
+```bash
 python -m venv .venv
-Step 4: Activate the virtual environment
+.venv\Scripts\activate
+```
 
-PowerShell:
+macOS / Linux:
 
-.venv\Scripts\Activate.ps1
-Step 5: Install dependencies
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+### 3. Install dependencies
+
+```bash
 pip install -r requirements.txt
-Step 6: Configure Gemini API
+```
 
-Create:
+### 4. Configure Gemini
 
-.env
+Create a `.env` file in the project root:
 
-Add:
-
+```env
 GEMINI_API_KEY=your_gemini_api_key
-Step 7: Run Streamlit
+```
+
+Do not commit `.env` or API keys to GitHub.
+
+### 5. Initialize the database
+
+Ensure the SQLite database is initialized using the project's schema/data setup. The application expects the database at:
+
+```text
+database/supermarket.db
+```
+
+The `.gitignore` excludes `*.db` so local database files are not committed.
+
+### 6. Start the application
+
+```bash
 streamlit run ui/app.py
+```
 
-The Streamlit application will open in the browser.
+Then open the local Streamlit URL shown in the terminal.
 
-🧪 Example Operations
-Check Stock
+## Deployment
 
-Input:
+The Streamlit UI can be deployed using **Streamlit Community Cloud** with the GitHub repository.
 
-Check the stock of Maggi 70g
+For deployment, configure the Gemini key through the platform's secrets configuration rather than committing a `.env` file.
 
-Expected behavior:
+Recommended entry point:
 
-Gemini
-   ↓
-check_stock
-   ↓
-SQLite
-   ↓
-Stock information
-Create Bill
+```text
+ui/app.py
+```
 
-Input:
+## Error Handling
 
-Create a bill for 2 Maggi 70g packets and pay by cash.
+The application includes handling for common operational failures such as:
 
-Expected behavior:
+- Missing Gemini API key
+- Gemini/API quota errors
+- Tool execution failures
+- Database failures
+- Insufficient stock during billing
+- Missing customer information for credit operations
 
-Check Product
-     ↓
-Verify Stock
-     ↓
-Create Bill
-     ↓
-Calculate GST
-     ↓
-Reduce Stock
-     ↓
-Record Payment
-Insufficient Stock
+## Design Decisions & Trade-offs
 
-Input:
+### Gemini Function Calling
 
+**Decision:** Use Gemini function calling rather than a manually coded intent router.
+
+**Why:** The model can interpret varied natural-language requests and select tools dynamically, while deterministic business logic remains inside Python tools.
+
+**Trade-off:** Model/API availability and latency are introduced into the interaction flow. Tool validation therefore remains essential.
+
+### SQLite
+
+**Decision:** Use SQLite for the current prototype.
+
+**Why:** It is lightweight, local, easy to deploy and sufficient for a small supermarket demonstration.
+
+**Trade-off:** A production multi-user deployment would require a stronger transactional/concurrent database architecture.
+
+### Streamlit
+
+**Decision:** Use Streamlit for the current operations dashboard.
+
+**Why:** It enables rapid development of a professional internal operations interface while keeping the focus on the AI agent and business logic.
+
+**Trade-off:** It is not intended to replace a full production frontend architecture for a large multi-user application.
+
+### Tool-Level Business Rules
+
+**Decision:** Keep stock and customer/business rules inside tools rather than depending on prompt instructions.
+
+**Why:** The model should orchestrate operations, not be trusted as the final authority for data integrity.
+
+## Current Scope
+
+The current implementation focuses on **Features 1–7**:
+
+1. KPI Dashboard
+2. Sales & Revenue Analytics
+3. Top-Selling Products
+4. Low-Stock Alert Center
+5. Recent Activity Timeline
+6. AI Operations Panel
+7. AI Execution Timeline
+
+Telegram integration is **not part of the current implementation** and is intentionally left for a future iteration.
+
+## Future Improvements
+
+With more development time, the project could be extended with:
+
+- Telegram interface integration
+- Multi-turn bill/cart state
+- Stronger transaction and concurrency controls
+- Idempotent billing operations
+- PDF GST invoice generation
+- Automated business-analysis reports
+- Persistent operator preferences
+- Multi-language support including Hindi/Tamil
+- Barcode/product-photo identification
+- Production-grade authentication and role-based access
+- PostgreSQL or another production database
+- Automated tests and CI/CD
+
+## Validation Example
+
+A useful safety test is:
+
+```text
+User:
 Create a bill for 100 Maggi 70g packets and pay by cash.
+```
 
-If only 28 packets are available:
+Expected behavior:
 
-Insufficient stock for Maggi 70g.
-Available: 28
+```text
+Gemini
+  ↓
+check_stock
+  ↓
+Stock result
+  ↓
+create_bill
+  ↓
+Insufficient stock / safe rejection
+  ↓
+Final response
+```
 
-The system does not create the bill.
+The system should not silently create a bill for inventory that is unavailable.
 
-Customer Credit
+## Technology Stack
 
-Input:
+- **Python**
+- **Google Gemini**
+- **Gemini Function Calling / Interactions API**
+- **Streamlit**
+- **SQLite**
+- **Plotly** (where available for analytics visualization)
+- **python-dotenv**
 
-Add customer Ravi with phone number 9876543210
+## Project Status
 
-Then:
+**Status: Active prototype / hiring-task implementation**
 
-Add ₹1000 credit to Ravi.
-
-Check:
-
-How much does Ravi owe?
-
-Payment:
-
-Record a payment of ₹500 from Ravi.
-🖥️ User Interface
-
-The Streamlit application provides a simple supermarket management dashboard.
-
-Dashboard
-
-Displays:
-
-Products
-Bills
-Customers
-Low Stock
-Navigation
-🏠 Dashboard
-🧾 Billing
-📦 Inventory
-👥 Customers
-💳 Payments & Credit
-📜 Bill History
-🤖 AI Assistant
-
-The AI Assistant allows supermarket staff to perform operations without manually interacting with the database.
-
-🔒 Security
-
-Sensitive configuration is kept outside the source code.
-
-The following files should not be committed:
-
-.env
-.venv/
-__pycache__/
-*.pyc
-*.db
-
-The .gitignore file is configured to prevent these files from being tracked.
-
-📁 Important Files
-File	Purpose
-ui/app.py	Streamlit user interface
-src/agent.py	Gemini AI agent and tool calling
-src/database.py	SQLite database connection
-src/tools/products.py	Inventory operations
-src/tools/billing.py	Billing operations
-src/tools/customers.py	Customer and credit operations
-src/tools/bill_history.py	Bill history
-src/tools/registry.py	Tool registry
-database/schema.sql	Database schema
-src/main.py	Main application/testing entry point
-requirements.txt	Python dependencies
-.env	Gemini API configuration
-.gitignore	Files excluded from Git
-🎯 Project Objective
-
-The objective of the Nebula Supermarket Ops Agent is to demonstrate how an AI-powered system can simplify day-to-day supermarket operations.
-
-Instead of requiring users to manually navigate multiple systems, the AI assistant allows them to interact with supermarket operations using natural language.
-
-For example:
-
-"Check Maggi stock."
-
-"Create a bill for 5 Maggi packets."
-
-"Add ₹500 credit to Ravi."
-
-"Show Ravi's balance."
-
-"Show previous bills."
-
-The AI agent converts these requests into appropriate backend tool calls.
-
-🔮 Future Improvements
-
-Possible future enhancements include:
-
-Advanced sales analytics
-Product search and filtering
-Invoice PDF generation
-Barcode scanning
-Role-based authentication
-Admin dashboard
-Daily sales reports
-Monthly revenue analytics
-Automatic stock-reorder suggestions
-Multiple payment methods
-Customer purchase history
-Cloud database integration
-Deployment to a cloud platform
-👨‍💻 Development
-
-The project follows a modular structure where supermarket operations are separated into individual tools.
-
-This makes it easier to:
-
-Add new supermarket operations
-Modify existing tools
-Test individual functions
-Connect new AI capabilities
-Extend the Streamlit interface
-📌 Status
-
-Project Status: Completed
-
-Current system includes:
-
-✅ Gemini AI Agent
-✅ Function Calling
-✅ SQLite Database
-✅ Product Management
-✅ Inventory Management
-✅ Billing
-✅ GST Calculation
-✅ Stock Validation
-✅ Customer Management
-✅ Credit / Khata
-✅ Payment Tracking
-✅ Bill History
-✅ Low Stock Detection
-✅ Streamlit UI
-✅ Environment Variable Configuration
-✅ Git Version Control
-📄 License
-
-This project is developed as an academic/project submission.
