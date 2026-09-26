@@ -474,7 +474,5 @@ The system should not silently create a bill for inventory that is unavailable.
 - **Plotly** (used for analytics visualization)
 - **python-dotenv**
 
-## Project Status
 
-**Status: Active prototype / hiring-task implementation**
 
