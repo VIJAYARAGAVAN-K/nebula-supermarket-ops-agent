@@ -1,4 +1,4 @@
-# 🛒 Nebula Supermarket Ops Agent
+# Nebula Supermarket Ops Agent
 
 > **AI-powered operations assistant for an Indian supermarket**
 >
